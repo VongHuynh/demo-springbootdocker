@@ -11,7 +11,7 @@
 ## Clone the repo
 
 ```
-git clone https://gitlab.com/springbootdevops/springbootdocker.git
+git clone https://github.com/VongHuynh/demo-springbootdocker.git
 ```
 
 
