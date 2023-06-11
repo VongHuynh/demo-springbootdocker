@@ -27,11 +27,11 @@ services:
     volumes:
       - ./certs:/etc/letsencrypt
     command: >
-            certonly --webroot --webroot-path=/etc/letsencrypt/webroot \
-            --email huynhvanvong2002@gmail.com \
-            --agree-tos \
-            --no-eff-email \
-            -d m2m.lerndevops.click
+      certonly --webroot --webroot-path=/etc/letsencrypt/webroot
+      --email huynhvanvong2002@gmail.com
+      --agree-tos
+      --no-eff-email
+      -d m2m.lerndevops.click
     depends_on:
       - nginx
     networks:
