@@ -14,5 +14,6 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+    container_name: nginx-spring-app
     depends_on:
       - spring-app
