@@ -7,6 +7,9 @@ services:
     container_name: spring-boot-demo
     ports:
       - "8080:8080"
+    networks:
+      - spring-app-network
+
   nginx:
     image: nginx:latest
     ports:
@@ -15,3 +18,23 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - spring-app
+    networks:
+      - spring-app-network
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certs:/etc/letsencrypt
+    command: >
+            certonly --webroot --webroot-path=/etc/letsencrypt/webroot \
+            --email huynhvanvong2002@gmail.com \
+            --agree-tos \
+            --no-eff-email \
+            -d m2m.lerndevops.click
+    depends_on:
+      - nginx
+    networks:
+      - spring-app-network
+
+networks:
+  spring-app-network:
