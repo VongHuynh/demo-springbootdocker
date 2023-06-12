@@ -1,0 +1,74 @@
+<div id="divThongBao">
+    	<div id="thongBao" style="display: none;" role="alert" align="center">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<span id="errorMessage" th:text="${errorMessage}"></span>
+			<span id="succeedMessage" th:text="${message}"></span>
+		</div>
+    </div>
+
+<div>
+	    <div class="site-branding-area">
+	        <div class="container">
+	            <div class="row">
+	                <div class="col-sm-6">
+	                    <div class="logo">
+	                        <h1><a href="/index"><img th:src="@{/user/img/logo.png}"></a></h1>
+	                    </div>
+	                </div>
+	                
+	                <div class="col-sm-6">
+	                    <div class="shopping-item">
+	                        <a th:href="@{/cart}">
+	                        	Cart - <span class="cart-amunt" 
+	                        				id="headerTotalPrice" th:text="${#numbers.formatCurrency(session.currentCart.totalPrice)}"></span> 
+	                        	<i class="fa fa-shopping-cart"></i> <span class="product-count"
+	                        												id="headerTotalQuantity"
+	                        												th:text="${session.currentCart.totalQuantity}"></span></a>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div> <!-- End site branding area -->
+	    
+	    <div class="mainmenu-area">
+	        <div class="container">
+	            <div class="row">
+	                <div class="navbar-header">
+	                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	                        <span class="sr-only">Toggle navigation</span>
+	                        <span class="icon-bar"></span>
+	                        <span class="icon-bar"></span>
+	                        <span class="icon-bar"></span>
+	                    </button>
+	                </div> 
+	                <div class="navbar-collapse collapse">
+	                    <ul class="nav navbar-nav">
+	                    	<li th:if="${session.currentUser != null}">
+	                    		<a href="">Welcome, <span th:text="${session.currentUser.username}" style="font-style: italic"></span></a>
+	                    	</li>
+	                        <li>
+	                        	<a th:href="@{/index}">Home</a>
+	                        </li>
+	                         <li>
+	                        	<a th:href="@{/type/dien-thoai}">Điện thoại</a>
+	                        </li>
+	                        <li>
+	                        	<a th:href="@{/type/laptop}">Laptop</a>
+	                        </li>
+	                        <li th:if="${session.currentUser == null}">
+	                        	<a th:href="@{/login}">Login</a>
+	                        </li>
+	                        <li th:if="${session.currentUser == null}">
+	                        	<a th:href="@{/register}">Register</a>
+	                        </li>
+	                        <li th:if="${session.currentUser != null}">
+	                    		<a th:href="@{/logout}">Logout</a>
+	                    	</li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div> <!-- End mainmenu area -->
+</div>

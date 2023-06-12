@@ -1,14 +1,14 @@
 package com.example.springbootdocker;
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
 @SpringBootApplication
-@OpenAPIDefinition
+@EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class})
 public class SpringBootDockerApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringBootDockerApplication.class, args);
     }
-
 }
