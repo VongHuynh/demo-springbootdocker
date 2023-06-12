@@ -1,5 +1,20 @@
-version: '3'
+version: '3.0'
 services:
+  mysqldb:
+    container_name: mysqldb
+    image: mysql:8.0
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: demo_db
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+      - ./src/main/resources/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    networks:
+      springboot-mysql-net:
+
   spring-app:
     build:
       context: .
@@ -7,13 +22,17 @@ services:
     container_name: spring-boot-demo
     ports:
       - "8080:8080"
-
-  nginx:
-    image: nginx:latest
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-    container_name: nginx-spring-app
+    environment:
+      DATABASE_HOST: mysqldb
+      DATABASE_PORT: 3306
+      DATABASE_NAME: demo_db
+      DATABASE_USER: root
+      DATABASE_PASSWORD: root
+      SPRING_PROFILES_ACTIVE: dev
     depends_on:
-      - spring-app
+      - mysqldb
+    networks:
+      springboot-mysql-net:
+
+networks:
+  springboot-mysql-net:
