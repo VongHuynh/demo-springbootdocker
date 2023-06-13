@@ -13,6 +13,11 @@
 git clone https://github.com/VongHuynh/demo-springbootdocker.git
 ```
 
+### If have mysql at local, create a database with name `demo_cloud` and then import data from file `./src/main/resources/init.sql`
+### If don't have mysql in your local. Install mysql use docker. in source code folder run:
+```
+docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root --name mysql -v ./src/main/resources/init.sql:/docker-entrypoint-initdb.d/init.sql mysql:8.0
+```
 
 ### Execute the below command to build the package:
 
@@ -41,7 +46,6 @@ You can now access the Hello World page via the web browser  http://localhost:80
 - COPY src ./src: Copies the source code from the local src directory into the container's /app/src directory.
 
 - RUN mvn clean install: Executes the Maven command mvn clean install inside the container, which builds the Spring Boot application and generates the executable JAR file.
-
 
 #### Stage 2: Minimal runtime environment
 - FROM eclipse-temurin:17-jre-jammy: Specifies the base image for the second stage, which is a minimal Java runtime environment based on the Eclipse Temurin (formerly AdoptOpenJDK) image with Java 17.
@@ -91,12 +95,25 @@ then, enter a password
 ```
 apt install docker.io
 ```
+
+### Install mysql for your server
+```
+docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root --name mysql -v ./src/main/resources/init.sql:/docker-entrypoint-initdb.d/init.sql mysql:8.0
+```
+### Build a image docker on your server
+```
+docker build -t spring-boot-demo .
+```
+### Finally, start your container on your server 
+```
+docker run -d -p 8080:8080 --name spring-boot-app spring-boot-demo
+```
+
 ### Then build image and run that image as directed above
 You can now access the Hello World page via the web browser:  http://<your_ip_server>:8080
 
 
-# Or Use docker compose to deploy
-
+# Or More simple way,  Use docker compose to deploy =))
 ### install docker-compose for your ubuntu server
 ```
 apt-get update && apt-get install docker-compose-plugin
@@ -105,4 +122,3 @@ in folder include docker-compose file, only run:
 ```
 docker-compose up -d
 ```
-it will be set up a nginx for webserver and start a spring boot app
